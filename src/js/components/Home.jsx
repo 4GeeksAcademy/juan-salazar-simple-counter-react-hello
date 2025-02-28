@@ -1,28 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+
+
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+	const [formateado, setFormateado] = useState(["0", "0", "0", "0"])
+	const [unit, setUnit] = useState(0)
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setUnit((prev) => (prev + 1) % 10000)
+		}, 1000)
+		return () => {
+			clearInterval(interval)
+		}
+	}, [])
+
+	useEffect(() => {
+		const digit = String(unit).padStart(4, "0").split("")
+		setFormateado(digit)
+	}, [unit])
+	return (
+		
+		
+		
+		
+		<div className="text-center mt-2" style={{  backgroundColor:"black" }}>
+			
+
+
+
+			<div className="d-inline-flex" style={{ fontSize: "10rem",color:"white" }}>
+
+				{formateado.map((digito, index) => (
+					<p className="p-5  " key={index}>{digito}</p>
+				))}
+			</div>
 		</div>
 	);
 };
-
 export default Home;
